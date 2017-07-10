@@ -1,0 +1,55 @@
+﻿@model OnlineShopping.DAL.Tbl_Product
+@{
+    ViewBag.Title = "ProductDetail";
+    Layout = "~/Views/Admin/_AdminLayout.cshtml";
+}
+
+<div class="rightpart">
+    <div class="sechBx clearfix">
+        <div class="bretcrum"><a href="#">Dashboard</a>&nbsp; » <span>Form</span></div>
+    </div>
+    <div class="dashBx" style="background-color: #ffffff">
+        <div class="dashboardHD">Product Detail</div>
+
+        <table style="background-color: #ffffff">
+            <tbody>
+                <tr>
+                    <th>Product Name</th>
+                    <td>@Model.ProductName</td>
+                </tr>
+                <tr>
+                    <th>Category Name</th>
+                    <td>@Model.Tbl_Category.CategoryName</td>
+                </tr>
+                <tr>
+                    <th>Price</th>
+                    <td>@Model.Price</td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td>@Html.Raw(Model.Description)</td>
+                </tr>
+                <tr>
+                    <th>Is Active</th>
+                    <td>@(Model.IsActive == true ? "Yes" : "No")</td>
+                </tr>
+                <tr>
+                    <th>Is Featured</th>
+                    <td>@(Model.IsFeatured == true ? "Yes" : "No")</td>
+                </tr>
+
+
+            </tbody>
+            <tr>
+                <td colspan="2">@if (Model.ProductImage != null && Model.ProductImage != "")
+                                {
+                    <img src="@(Path.Combine(System.Configuration.ConfigurationManager.AppSettings["ProductImage"], "Large/", Model.ProductId + "_" + Model.ProductImage))" alt="" id="ImgProfServiceBanner" />
+                                }
+                                else
+                                {
+                    <img src="/images/No Photo.png" alt="" id="ImgProfServiceBanner" />
+                                }</td>
+            </tr>
+        </table>
+    </div>
+</div>

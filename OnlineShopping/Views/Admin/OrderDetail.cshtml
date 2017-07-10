@@ -1,0 +1,69 @@
+﻿@model List<OnlineShopping.DAL.Tbl_Cart>
+@{
+    ViewBag.Title = "Order Detail";
+    Layout = "~/Views/Admin/_AdminLayout.cshtml";
+}
+<div class="rightpart">
+    <div class="sechBx clearfix">
+        <div class="bretcrum">Dashboard</div>
+    </div>
+    <div class="dashBx">
+        <div class="dashboardHD"> Order Detail</div>
+        <div class="dashTable" id="rootId">
+            @if (Model.Count() > 0)
+            {
+                <table id="tblId">
+                    <thead>
+                        <tr>
+                            <th>Sr. No.</th>
+                            <th>Product</th>
+                            <th>Member Name</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@(Model.IndexOf(item) + 1)</td>
+                                <td><a style="color:cornflowerblue" title="Click to see the product detail" href="/admin/ProductDetail?productId=@item.ProductId"> @item.Tbl_Product.ProductName</a></td>
+                                <td>@(item.Tbl_Members.FirstName + " " + item.Tbl_Members.LastName)</td>
+                                <td>@item.Tbl_Members.EmailId</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <table id="tblId1">
+                    <thead>
+                        <tr>
+                            <th>Sr. No.</th>
+                            <th>Product</th>
+                            <th>Member Name</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td colspan="4">No records found !!!</td></tr>
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</div>
+
+@section js{
+    <script>
+        $(document).ready(function () {
+            $('#tblId').dataTable({
+                columnDefs: [
+       { orderable: false, targets: -1 }
+                ]
+            });
+        });
+
+    </script>
+}
+

@@ -1,0 +1,53 @@
+﻿@model OnlineShopping.Models.RegisterViewModel
+
+@{     ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_FrontLayout.cshtml";
+}
+<!--Start Sign Up-->
+<div class="contactUs signupBox clearfix">
+    <div class="container">
+        <h1>Sign Up</h1>
+        @using (Html.BeginForm("Register", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "contactForm signupForm", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="signUpcheck clearfix" style="display:none">
+                <div class="customRadio checkRight">
+                    @Html.RadioButton("UserType", 2, new { @class = "css-checkbox", @checked = "checked" })
+                    <label for="radio-2" class="css-label">knowbee</label>
+                </div>
+            </div>
+            <div class="formRow clearfix">
+                <div>
+                    @Html.ValidationMessageFor(m => m.FirstName)
+                    @Html.TextBoxFor(m => m.FirstName, new { @class = "inputComn", @placeholder = "First Name" })
+                </div>
+            </div>
+            <div class="formRow clearfix">
+                <div>
+                    @Html.ValidationMessageFor(m => m.LastName)
+                    @Html.TextBoxFor(m => m.LastName, new { @class = "inputComn", @placeholder = "Last Name" })
+                </div>
+            </div>         <div class="formRow clearfix">
+                <div>
+                    @Html.ValidationMessageFor(m => m.UserEmailId)
+                    @Html.TextBoxFor(m => m.UserEmailId, new { @class = "inputComn", @placeholder = "Email Address" })
+                </div>
+            </div>
+
+            <div class="formRow clearfix">
+                <div>
+                    @Html.ValidationMessageFor(m => m.Password)
+                    @Html.PasswordFor(m => m.Password, new { @class = "inputComn", @placeholder = "Password", @type = "Password" })
+                </div>
+            </div>
+            <div class="formRow clearfix">
+                <div>
+                    @Html.ValidationMessageFor(m => m.ConfirmPassword)
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "inputComn", @placeholder = "ConfirmPassword", @type = "Password" })
+                </div>
+            </div>  
+                 @Html.HiddenFor(m=>m.UserType)  
+            <input type="submit" class="contactBtn signupBtn" value="Submit" />      
+        }
+    </div>
+</div> 

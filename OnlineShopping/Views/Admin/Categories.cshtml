@@ -1,0 +1,74 @@
+﻿@model List<OnlineShopping.DAL.Tbl_Category>
+@{
+    ViewBag.Title = "Seekers";
+    Layout = "~/Views/Admin/_AdminLayout.cshtml";
+}
+
+<div class="rightpart">
+    <div class="sechBx clearfix">
+        <div class="bretcrum">Dashboard</div>
+    </div>
+        <div class="dashBx">
+            <div class="dashboardHD">Categories</div>
+            <div id="AddNewPage">
+                <a href="/Admin/AddCategory" class="AddNewContent">Add New Category</a>
+            </div>
+            @if (Model.Count > 0)
+            {
+                <div class="dashTable" id="rootId">
+                    <table id="tblId">
+                        <thead>
+                            <tr>
+                                <th>Sr. No.</th>
+                                <th>Category Name</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@(Model.IndexOf(item) + 1)</td>
+
+                                    <td>@item.CategoryName</td>
+
+                                    <td>
+                                      
+                                        <a href="javascript:void(0)" onclick="deletedata (@item.CategoryId)" class="delBtn">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <br />
+                <br />
+                <div class="NoRecord">
+                    <h3>No records found</h3>
+                    <div class="clearfix"></div>
+                    <div class="dashfrm-L submitBtns">
+                        <a onclick="window.history.back();" class="editBtn cancelBtn" style="width: 48%;"><< Back</a>
+                    </div>
+                </div>
+            }
+        </div>
+</div>
+@section js{
+<script>
+    $(document).ready(function () {
+        $('#tblId').dataTable({
+            columnDefs: [
+   { orderable: false, targets: -1 }
+            ]
+        });
+    });
+
+    function deletedata(x) {
+        SweetAlertDeleteConfirmation('warning', '', 'Are you sure, you want to delete this category?', '', 'Category deleted successfully.', '', 'Category is not deleted', '/Admin/DeleteCategory', x);
+    }
+</script>
+    }
+

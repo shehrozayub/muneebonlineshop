@@ -1,0 +1,75 @@
+﻿@if (ViewBag.TotalCount > ViewBag.PageSize)
+{
+    <div class="pageing" id="partialview">
+        <div class="pageing-list">
+            <ul>
+
+                <li>
+                    @if (ViewBag.PageNo < 2)
+                    {
+                        @*<a href="javascript:void(0)" onclick="@(ViewBag.PageNo > 4 ? "paging("+(ViewBag.PageNo - 1)+")" : "")" class="@(ViewBag.PageNo > 4 ? "" : "active disablearrow")">
+                            <img src="/images/prev-arrow-list.png" alt="">
+                        </a>*@
+                            <a href="javascript:void(0)" class="@(ViewBag.PageNo > 4 ? "" : "active disablearrow")">
+                            <img src="/images/prev-arrow-list.png" alt="">
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="javascript:void(0)" onclick="paging(@(ViewBag.PageNo - 1))" class="@(ViewBag.PageNo > 4 ? "" : "")">
+                            <img src="/images/prev-arrow-list.png" alt="">
+                        </a>
+                    }
+                </li>
+
+                @for (int i = 0; i < Math.Ceiling(double.Parse(ViewBag.TotalCount.ToString()) / double.Parse(ViewBag.PageSize.ToString())); i++)
+                {
+                    if (i == 0)
+                    {
+                        <li><a href="javascript:void(0)" onclick="paging(@(i + 1))" class="@(ViewBag.PageNo == (i + 1) ? "active" : "")">@(i + 1)</a></li>
+                        @*if (ViewBag.PageNo > 4)
+                        {
+                            <li><a href="javascript:void(0)" style="cursor: text">...</a></li>
+                        }*@
+                    }
+                    @*else if (i < Math.Ceiling(double.Parse(ViewBag.TotalCount.ToString()) / double.Parse(ViewBag.PageSize.ToString())) - 1)
+                        {
+                            <li><a href="javascript:void(0)" onclick="paging(@(i + 1))" style="@(((i + 1) >= (ViewBag.PageNo - 2) && (i + 1) <= ViewBag.PageNo) || ((i + 1) <= (ViewBag.PageNo + 2) && (i + 1) >= ViewBag.PageNo) ? "" : "display:none")" class="@(ViewBag.PageNo == (i + 1) ? "active" : "")">@(i + 1)</a></li>
+                            if (((ViewBag.PageNo) < 4 && (i + 1) == 5) || ((ViewBag.PageNo) >= 4 && (i) == (ViewBag.PageNo + 1)))
+                            {
+                                if (ViewBag.PageNo != Math.Ceiling(double.Parse(ViewBag.TotalCount.ToString()) / double.Parse(ViewBag.PageSize.ToString())) - 3)
+                                {
+                                    <li><a href="javascript:void(0)" style="cursor: text">...</a></li>
+                                }
+                            }
+                        }
+                        else
+                        {
+                            <li><a href="javascript:void(0)" onclick="paging(@(i + 1))" class="@(ViewBag.PageNo == (i + 1) ? "active" : "")">@(i + 1)</a></li>
+                        }*@
+                    else if (i < (ViewBag.TotalCount / ViewBag.PageSize) / 2 || (i > (ViewBag.TotalCount / ViewBag.PageSize) / 2))
+                    {
+                        <li><a href="javascript:void(0)" onclick="paging(@(i + 1))" class="@(ViewBag.PageNo == (i + 1) ? "active" : "")">@(i + 1)</a></li>
+                    }
+                    else
+                    {
+                        if ((ViewBag.TotalCount / ViewBag.PageSize) > 5)
+                        {
+                            <li><a href="javascript:void(0)" style="cursor: text">...</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="javascript:void(0)" onclick="paging(@(i + 1))" class="@(ViewBag.PageNo == (i + 1) ? "active" : "")">@(i + 1)</a></li>
+                        }
+                    }
+                }
+                <li>
+                    <a href="javascript:void(0)" onclick="@(ViewBag.PageNo < Math.Ceiling(double.Parse(ViewBag.TotalCount.ToString()) / double.Parse(ViewBag.PageSize.ToString())) ? "paging(" + (ViewBag.PageNo + 1) + ")" : "")" class="@(ViewBag.PageNo < Math.Ceiling(double.Parse(ViewBag.TotalCount.ToString()) / double.Parse(ViewBag.PageSize.ToString())) ? "" : "active disablearrow")">
+                        <img src="/images/next-arrow-list.png" alt="">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+}
+<input type="hidden" id="hdn_pageno" name="hdn_pageno" value="@(TempData["hdn_pageno"]!=null? TempData["hdn_pageno"].ToString():"1")" />

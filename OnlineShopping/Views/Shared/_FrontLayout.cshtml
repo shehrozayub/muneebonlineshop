@@ -1,0 +1,103 @@
+﻿@using OnlineShopping.Utility
+@using OnlineShopping.DAL
+@{
+    List<OnlineShopping.DAL.Tbl_Category> AllCategories = (List<OnlineShopping.DAL.Tbl_Category>)ViewBag.CategoryAndSubCategory;
+}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta charset="UTF-8">
+    @if (!string.IsNullOrEmpty(ViewBag.MetaKeywords))
+    {
+        <meta name="keywords" content="@ViewBag.MetaKeywords">
+    }
+    @if (!string.IsNullOrEmpty(ViewBag.MetaPhrase))
+    {
+        <meta name="phrase" content="@ViewBag.MetaPhrase">
+    }
+    @if (!string.IsNullOrEmpty(ViewBag.MetaDescription))
+    {
+        <meta name="description" content="@ViewBag.MetaDescription">
+    }
+    <!--css-->
+    <link rel="stylesheet" href="/CSS/stylesheet.css" media="all">
+    <link rel="stylesheet" href="/CSS/owl.carousel.css">
+    <link href="~/CSS/CustomStyleSheet.css" rel="stylesheet" />
+    <link href="/CSS/sweetalert.css" rel="stylesheet" />
+    @RenderSection("CSS", false)
+    <script type="text/javascript" src="/Scripts/jquery.min.js"></script>
+    <!--css-->
+    <title> @ViewBag.MetaTitle </title>
+</head>
+
+<body class="@((Request.Url.AbsolutePath.ToLower() != "/" && Request.Url.AbsolutePath.ToLower() != "/home" && Request.Url.AbsolutePath.ToLower() != "/home/index") ? "bgColor" : "")">
+    <!--Start main Container-->
+    <div class="mainCon">
+        <!--Start Header-->
+        <header class="clearfix">
+            <div class="browseCategories">
+                <button type="button" class="categoriesBtn"><img src="/Images/toggleIcon.png" alt="img" /><span>Browse Categories</span></button>
+            </div>
+            
+            <div class="menuBar">
+                <div class="menuMobile">
+                    <ul>
+                        @if (Session["MemberId"] != null)
+                        {
+                            <li>Hello @(Request.Cookies["MemberName"] != null && !string.IsNullOrEmpty(Request.Cookies["MemberName"].Value) ? Request.Cookies["MemberName"].Value : "User")</li>
+                            <li><a href="/shopping/mycart">Cart Items</a></li>
+                             <li><a href="/account/logout">Logout</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="javascript:void(0)" class="loginpopup">Login</a></li>
+                            <li><a href="/account/register">Sign Up</a></li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </header>
+        <div class="categories transition">
+            <ul class="categoriesList">
+                <!--<div class="closeBtn">X Close</div>-->
+                @foreach (var cat in AllCategories)
+                {
+                    <li class="@(AllCategories.Where(i => i.CategoryId == cat.CategoryId).Count() > 0 ? "subcat" : "")">
+                        <a href="/Search/index?searchKey=@cat.CategoryName">@cat.CategoryName</a>
+                        <ul class="subCategories" style="display:@(AllCategories.Where(i => i.CategoryId == cat.CategoryId).Count() > 0  ? "" : "none")">
+                            <h1>All @cat.CategoryName</h1>
+                            @foreach (var p in cat.Tbl_Product.ToList())
+                            {
+                                <li><a href="/Search/index?searchKey=@p.ProductName">@p.ProductName</a></li>
+                            }
+                        </ul>
+                    </li>
+                }
+            </ul>
+        </div>
+        <!--End Header-->
+        @RenderBody()
+
+
+        <!--Login Popup/Modal-->
+        <div class="backBg" id="loginpopup">
+            @{Html.RenderPartial("_Login", new OnlineShopping.Models.LoginViewModel() { UserEmailId = (Request.Cookies["RememberMe_UserEmailId"] != null ? Request.Cookies["RememberMe_UserEmailId"].Value : ""), Password = (Request.Cookies["RememberMe_Password"] != null ? Request.Cookies["RememberMe_Password"].Value : ""), RememberMe = string.IsNullOrEmpty((Request.Cookies["RememberMe_UserEmailId"] != null ? Request.Cookies["RememberMe_UserEmailId"].Value : "")) ? false : true });}
+        </div>
+        <!--End Popup/Modal-->
+    </div>
+    <!--script-->
+
+    <script src="/Scripts/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="/Scripts/function.js"></script>
+    <script src="~/Scripts/CustomFunction.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Scripts/sweetalert-dev.js"></script>
+    <script src="~/Scripts/jquery-ui.js"></script>
+    <script src="~/Scripts/datepicker.js"></script>
+    @RenderSection("Scripts", false)
+</body>
+</html>

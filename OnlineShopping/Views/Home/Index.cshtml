@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Online Shopping : Home Page";
+    Layout = "~/Views/Shared/_FrontLayout.cshtml";
+    List<OnlineShopping.DAL.Tbl_Product> FeaturedProducts = (List<OnlineShopping.DAL.Tbl_Product>)ViewBag.FeaturedProducts;
+}
+<style>
+    .profPerson .ProfImg {
+        width: 240px;
+        height: 153px;
+    }
+
+    .assistImg .transition {
+        height: 107px;
+    }
+</style> 
+    <div class="bannerSlider" style="background: url(../images/HomePageBanner.png) no-repeat center center;">     </div>     <div class="searchOnline clearfix">
+        @*<div class="container">
+            <div class="olContent fl"><h2>Search Product/Category</h2></div>
+            <div class="olSearch fr">
+                @using (Html.BeginForm("Index", "Search", FormMethod.Post))
+                {
+                    <div>
+                        <input type="text" placeholder="Enter Keywords" onkeypress="return onlynumericOrCharacter();" name="searchKey" class="inputComn houseText">
+                    </div>
+                    <div class="searchIcon">
+                        <button type="button" class="searchBtn" onclick="$(this).parent().parent().submit();">
+                            <img src="/images/searchIcon.png" alt="img">
+                        </button>
+                    </div>
+                }
+            </div>
+        </div>*@
+    </div>
+</div> <!--End Slider--> <!--Start Featured Professionals--> 
+<!--End Featured Professionals-->
+@section Scripts
+    {
+    <script>
+      window.onload = function () {
+      if ('@Request.QueryString["returnUrl"]' != '') {
+       $('#returnUrl').val('@Request.QueryString["returnUrl"]')
+       $('.loginpopup').trigger('click');
+    }
+
+                          if('@TempData["VerificationLinlMsg"]'!='')             {
+     swal('@TempData["VerificationLinlMsg"]', '', 'success');
+     }         }     </script> 
+     }  

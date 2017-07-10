@@ -1,0 +1,97 @@
+﻿@model OnlineShopping.DAL.Tbl_Product
+@using OnlineShopping.DAL
+@{     ViewBag.Title = "ProductDetail";
+    Layout = "~/Views/Shared/_FrontLayout.cshtml";
+    List<Tbl_Product> SimilarProducts = (List<Tbl_Product>)ViewBag.SimilarProducts;
+}
+<style>
+    .servicesList .servicesBox .servicesImg img {
+        height: 145px;
+    }
+</style> <!--Start product Details--> <div class="servicefinal">
+    <div class="container">
+        <div class="servicefinalLeft fl">
+            <!--Start servicesdetailsBox-->
+            <div class="servicesdetailsBox">
+                @if (File.Exists(Server.MapPath(System.Configuration.ConfigurationManager.AppSettings["ProductImage"] + "Large/" + Model.ProductId + "_" + Model.ProductImage)))
+                {
+                    <img src="@(System.Configuration.ConfigurationManager.AppSettings["ProductImage"] + "Large/" +Model.ProductId+ "_" + Model.ProductImage)" />                     }
+                else
+                {
+                    <img src="@(System.Configuration.ConfigurationManager.AppSettings["ProductImage_Default_Large"])" alt="" />
+                }
+                <div class="inrfinalServices">
+                    <h2>@Model.ProductName</h2>
+                    <h3>@Model.Tbl_Category.CategoryName</h3>
+                </div>
+            </div>
+            <!--End servicesdetailsBox-->
+            <!--Start Description-->
+            <div class="description">
+                <!--Start aboutMe-->
+                <div class="aboutMe">
+
+                    <h1 class="prfHeading">Description</h1>
+                    <div class="profInnerBox innerbox1">
+                        @Html.Raw(Model.Description)
+                    </div>
+                </div>                 <!--End aboutMe-->
+            </div>             <!--End Description-->
+        </div>
+        <div class="servicefinalRight fr">
+            <!--Start Add product to cart-->
+            <div class="bookaService">
+                <span>Price</span>
+                <strong>@Model.Price</strong>
+                <a href="/shopping/addproducttocart?productId=@Model.ProductId" class="bookreviewBtn" type="button">Add to cart</a>
+            </div>
+            <!--End Add product to cart-->
+            <!--Start Similar Products-->
+            <div class="favorite">
+                <div class="othersViewed"><span>Similar Products</span></div>
+            </div>             <div class="viewList">
+                <ul class="servicesList">
+                    @if (SimilarProducts.Count > 0)
+                    {
+                        foreach (var ov in SimilarProducts)
+                        {
+                            <li>
+                                <!--Start ServicesBox-->
+                                <div class="servicesBox">
+                                    <div class="servicesImg">
+                                        @if (File.Exists(Server.MapPath(System.Configuration.ConfigurationManager.AppSettings["ProductImage"] + "Medium/" + ov.ProductId + "_" + ov.ProductImage)))
+                                        {
+                                            <img src="@(System.Configuration.ConfigurationManager.AppSettings["ProductImage"] + "Medium/" + ov.ProductId + "_" + ov.ProductImage)" />
+                                        }
+                                        else
+                                        {
+                                            <img src="/images/No Photo.png" alt="" />
+                                        }
+                                    </div>
+                                    <div class="nameLink">
+                                        <a href="/search/productdetail?pId=@ov.ProductId" title="View product details">@ov.ProductName</a>
+                                        <div class="byperson clearfix">
+                                            <div class="prsonLeft fl"><h3>Category : @ov.Tbl_Category.CategoryName</h3></div>
+                                        </div>
+                                    </div>
+                                    <div class="rate clearfix">
+                                        <span class="fl">Price</span>
+                                        <span class="blueClr fr">@ov.Price</span>
+                                    </div>
+                                </div>                                 <!--End Similar Products-->
+                            </li>
+                        }
+                    }
+                    else
+                    {
+                        <li>
+                            No similar products
+                            <div class="servicesBox">
+                            </div>
+                        </li>
+                    }
+                </ul>                 <!--End list-->
+            </div>
+        </div>
+    </div>
+</div> <!--End product Details--> 

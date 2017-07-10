@@ -1,0 +1,91 @@
+﻿@model OnlineShopping.Models.ProductDetail
+
+@{
+    ViewBag.Title = "Seekers";
+    Layout = "~/Views/Admin/_AdminLayout.cshtml";
+}
+
+<style>
+    .MCEEditor {
+        height: 200px;
+    }
+</style>
+<script src="/Scripts/tiny_mce/tiny_mce.js" type="text/javascript"></script>
+<div class="rightpart">
+    <div class="sechBx clearfix">
+        <div class="bretcrum"><a href="#">Dashboard</a>&nbsp; » <span>Form</span></div>
+    </div>
+    <div class="dashBx">
+        @using (Html.BeginForm("UpdateProduct", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="dashboardHD">
+                @(Request.Url.ToString().ToLower().Contains("addproduct") ? "Add Product" : "Update Product")
+            </div>
+            <h3 style="color:red;font-weight:bold"> @TempData["FillRequiredFields"]</h3>
+            <div class="dashformBx  dashformBx2 clearfix">
+                @Html.HiddenFor(m => m.ProductId)
+                <div class="dashfrm-L">
+                    <label class="lblTxt">Category Name*</label>
+                    @Html.DropDownListFor(m => m.CategoryId, new SelectList(Model.Categories, "Value", "Text", Model.CategoryId), "Select Category", new { @class = "dashInp" })
+                    @Html.ValidationMessageFor(m => m.CategoryId)
+                </div>
+                <div class="dashfrm-M">
+                    <label class="lblTxt">Product Name*</label>
+                    @Html.TextBoxFor(m => m.ProductName, new { @class = "dashInp", @onkeypress = "return OnlyLegalCharacters();" })
+                    @Html.ValidationMessageFor(m => m.ProductName)
+                </div>
+                <div class="dashfrm-R">
+                    <label class="lblTxt">Price*</label>
+                    @Html.TextBoxFor(m => m.Price, new { @class = "dashInp", @onkeypress = "return OnlyLegalCharacters();" })
+                    @Html.ValidationMessageFor(m => m.Price)
+                </div>
+                <div class="clearfix"></div>
+                <div class="dashfrm">
+                    <label class="lblTxt">Description*</label>
+                    @Html.TextAreaFor(m => m.Description, new { @class = "dashInp MCEEditor" })
+                    @Html.ValidationMessageFor(m => m.Description)
+                </div>
+
+                <div class="Edit-Img">
+                    <label class="lblTxt">Banner Image</label>
+                    @if (Model.ProductImage != null && Model.ProductImage != "")
+                    {
+                        <img src="@(Path.Combine(System.Configuration.ConfigurationManager.AppSettings["ProductImage"], "Medium/", Model.ProductId + "_" + Model.ProductImage))" alt="" id="ImgProfServiceBanner" />
+                        @Html.HiddenFor(m => m.ProductImage)
+                    }
+                    else
+                    {
+                        <img src="/images/No Photo.png" alt="" id="ImgProfServiceBanner" />
+                    }
+                    <div class="edit-icon">
+                        <input type="file" id="ProfServiceBannerImg" name="_ProductImage" style="height:1px; width:1px;display:none;" onchange="readImageURL(this, '#ImgProfServiceBanner')" />
+                        <a href="javascript:void(0)" onclick="$('#ProfServiceBannerImg').click();"><img src="/images/edit-icon2.png" alt=""></a>
+                    </div>
+                    @Html.ValidationMessageFor(m => m.ProductImage)
+                </div>
+                <div class="clearfix"></div>
+                <div class="dashfrm">
+                    <label class="lblTxt" style="width: 137px;">@Html.CheckBoxFor(m => m.IsActive)   Is Active?</label>                 
+                </div>
+                 <div class="clearfix"></div>
+                <div class="dashfrm">
+                    <label class="lblTxt" style="width: 137px;">@Html.CheckBoxFor(m => m.IsFeatured)   Is Featured Product?</label>                 
+                </div>
+                <div class="clearfix"></div>
+                <div class="dashfrm-L submitBtns">
+                    <a onclick="window.history.back();" class="editBtn cancelBtn" style="width: 48%;">Cancel</a>
+                    <input type="submit" value="Submit" onclick="return CheckValidInput(this);" class="editBtn" style="width: 48%;" />
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section js{
+    <script>
+        $(document).ready(function () {
+            InitializeMCEEditor();
+        });
+    </script>
+}

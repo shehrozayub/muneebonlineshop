@@ -1,0 +1,554 @@
+﻿@using Service_Based_Marketplace.LanguageResources
+@using Service_Based_Marketplace.Utility
+@model IEnumerable<Service_Based_Marketplace.Models.SearchServiceAndProfessional>
+@{
+    Layout = null;
+    DateTime AvailableDate;
+    DateTime.TryParseExact(ViewBag.AvailableDate, "MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out AvailableDate);
+}
+<style>
+    .FilterBox {
+        max-height: 200px;
+        overflow: auto;
+    }
+
+    .detailsmsg span {
+        font-size: 13px;
+    }
+
+    /*.msg {
+        width: 30%;
+    }*/
+
+    .city1 {
+        width: 40%;
+        text-align: center;
+    }
+
+        .city1 img {
+            height: 12px;
+            width: auto;
+            display: inline-block;
+            margin-right: 3px;
+        }
+
+    /*.booking {
+        width: 30%;
+    }*/
+</style>
+<div class="mainHouse">
+    <div class="container">
+        <div class="housekeeping clearfix">
+            <div class="housekeepingLeft fl"><h1>@ViewBag.searchKey &nbsp; <span>@(!string.IsNullOrEmpty(ViewBag.searchKey) ? "I" : "")  &nbsp; @(ViewBag.TotalCount != null ? ViewBag.TotalCount : 0) records found</span></h1> </div>
+            <div class="housekeepingRight fr" id="divFilter">
+                @*<div><input type="text" placeholder="Enter Keywords" class="houseComn" id="searchKey" name="searchKey" value="@ViewBag.searchKey" onkeypress="return onlynumericOrCharacter();"></div>
+                    <div class="searchIcon">
+                        <button type="button" class="searchBtn" onclick="$(this).parent().parent().submit();"><img src="/images/searchIcon.png" alt="img"></button>
+                    </div>*@
+                <div class="housekeepingInput"><input type="text" placeholder="Enter Keywords" class="houseComn" id="searchKey" name="searchKey" value="@ViewBag.searchKey" onkeypress="return onlynumericOrCharacter();"></div>
+                <div class="housekeepingSearch"><button type="button" class="housesearchBtn" onclick="$('#dvFilterSearch').parent().submit();"><img src="/images/searchIcon.png" alt="img" /></button></div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="mainServices clearfix">
+    <div class="container">
+        <div class="servicesLeft fl">
+            <div class="leftBox">
+                <div class="leftHead">
+                    <h1>Knowbles</h1>
+                    <div class="innerBox">
+                        @if (ViewBag.AllVerifiedByAdminCount != null)
+                        {
+                            <div class="customCheckbox">
+                                <label class="css-label1">
+                                    <input type="checkbox" name="All" value="All" class="css-checkbox1 lowerSapce chkVerifiedAll" id="chkAllVerified" onclick="checkall(this, 'verified')" @(Request["All"] != null && Request["All"].Contains("All") == true ? "checked" : "")>
+                                    All
+                                </label>
+                                <span>@ViewBag.AllTotalCount</span>
+                            </div>
+                            foreach (var item in ViewBag.AllVerifiedByAdminCount)
+                            {
+
+                                <div class="customCheckbox">
+                                    <label class="css-label1">
+                                        @*<input type="checkbox" name="Verified" value="@item.Verified" class="css-checkbox1 lowerSapce verified" id="chkVerified" onclick="chkedVarefied()" @(ViewBag.VerifiedList != null && ViewBag.VerifiedList.Contains("" + item.Verified + "") == true ? "checked" : "")>*@
+                                        <input type="checkbox" name="Verified" value="@item.Verified" class="css-checkbox1 lowerSapce verified chkVerified" onclick="chkedVarefied()" @(ViewBag.VerifiedList != null && ViewBag.VerifiedList.Contains("" + item.Verified + "") == true ? "checked" : "")>
+
+                                        @(item.Verified == 1 ? "Verified" : " Not Verified")
+
+
+                                    </label>
+                                    <span>@item.VerifiedByAdminCount</span>
+                                </div>
+                                @*<div class="customCheckbox">
+                                        <label class="css-label1">
+                                            <input type="checkbox" name="Verified" value="@item.Verified" class="css-checkbox1 verified" id="chkNotVerified" onclick="chkedVarefied()" @(ViewBag.VerifiedList != null && ViewBag.VerifiedList.Contains("0") == true ? "checked" : "")>
+                                            Not Verified
+                                        </label>
+                                        <span>@item.VerifiedByAdminCount</span>
+                                    </div>*@
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="leftBox upperSapce">
+                <div class="leftHead">
+                    <h1>Location</h1>
+                    <div class="innerBox FilterBox">
+                        @if (ViewBag.AllCountryCount != null)
+                        {
+                            <div class="customCheckbox">
+                                <label class="css-label1">
+                                    <input type="checkbox" name="Country" value="AllCountry" class="css-checkbox1 lowerSapce chkAllCountry" id="chkAllCountryId" onclick="checkall(this,'chkCountry')" @(ViewBag.CountryList != null && ViewBag.CountryList.Contains("AllCountry") == true ? "checked" : "")>
+                                    All Countries
+                                </label>
+                                <span>@ViewBag.TotalCountry</span>
+                            </div>
+                            foreach (var item in ViewBag.AllCountryCount)
+                            {
+                                <div class="customCheckbox">
+                                    <label class="css-label1">
+                                        @*<input type="checkbox" name="Country" class="css-checkbox1 lowerSapce chkCountry" id="chkCountry" value="@item.CountryId" onclick="chkedCountry()" @(ViewBag.CountryList != null && ViewBag.CountryList.Contains("" + item.CountryId + "") == true ? "checked" : "")>*@
+                                        <input type="checkbox" name="Country" class="css-checkbox1 lowerSapce chkCountry" value="@item.CountryId" onclick="chkedCountry()" @(ViewBag.CountryList != null && ViewBag.CountryList.Contains("" + item.CountryId + "") == true ? "checked" : "")>
+                                        @item.CountryName
+                                    </label>
+                                    <span>@item.Count</span>
+                                </div>
+                            }
+                        }
+                        @*<a href="#">+ Add More</a>*@
+                    </div>
+                </div>
+            </div>
+            <div class="leftBox upperSapce">
+                <div class="leftHead">
+                    <h1>language</h1>
+                    <div class="innerBox FilterBox">
+                        @if (ViewBag.AllLangaugeCount != null)
+                        {
+                            <div class="customCheckbox">
+                                <label class="css-label1">
+                                    <input type="checkbox" value="All" name="AllLangauge" class="css-checkbox1 lowerSapce chkclassLagauge" id="chkAllLangaugeId" onclick="checkall(this, 'chkclassLagauge')" @(ViewBag.AllLangauge != null && ViewBag.AllLangauge.Contains("All") == true ? "checked" : "")>
+                                    All
+                                </label>
+                                <span>@ViewBag.TotalLangaugeCount</span>
+                            </div>
+                            foreach (var item in ViewBag.AllLangaugeCount)
+                            {
+                                <div class="customCheckbox">
+                                    <label class="css-label1">
+                                        <input type="checkbox" value="@item.LanguageId" name="Langauge" class="css-checkbox1 lowerSapce chkclassLagauge ChkIndividualLanguageCheckBox" onclick="chkedLangauge()" @(ViewBag.LangaugeList != null && ViewBag.LangaugeList.Contains("" + item.LanguageId + "") == true ? "checked" : "")>
+                                        @item.LanguageName
+                                    </label>
+                                    <span>@item.Count</span>
+                                </div>
+                            }
+                        }
+                        @*<a href="#">+ Add More</a>*@
+                    </div>
+                </div>
+            </div>
+            <div class="leftBox upperSapce">
+                <div class="leftHead">
+                    <h1>Booking Count</h1>
+                    <div class="innerBox">
+                        <div class="rangeSlider">
+                            <div id="slider-range"></div>
+                            <input type="text" id="BookingCount" name="BookingCount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="leftBox upperSapce">
+                <div class="leftHead">
+                    <h1>Rating</h1>
+                    <div class="innerBox">
+                        @if (ViewBag.AllRatingCount != null)
+                        {
+                            foreach (var item in ViewBag.AllRatingCount)
+                            {
+                                if (item.Rating == 0)
+                                {
+                                    <div class="customCheckbox">
+                                        <label class="css-label1">
+                                            <input type="checkbox" name="Rating" value="0" class="css-checkbox1 lowerSapce chkClassRating" id="chkRatingId" onclick="chkedRating()" @(ViewBag.RatingeList != null && ViewBag.RatingeList.Contains("0") == true ? "checked" : "")>
+                                            <img src="/images/0star.png" alt="star">
+                                        </label>
+                                        <span>
+                                            @(((List<Service_Based_Marketplace.Models.RatingCount>)ViewBag.AllRatingCount).Where(m => m.Rating == 0).FirstOrDefault() != null ?
+                ((List<Service_Based_Marketplace.Models.RatingCount>)ViewBag.AllRatingCount).Where(m => m.Rating == 0).FirstOrDefault().Count : 0)
+                                        </span>
+                                    </div>
+                                }
+                                else if (item.Rating == 1)
+                                {
+                                    <div class="customCheckbox">
+                                        <label class="css-label1">
+                                            <input type="checkbox" name="Rating" value="1" class="css-checkbox1 lowerSapce chkClassRating" id="chkRatingId" onclick="chkedRating()" @(ViewBag.RatingeList != null && ViewBag.RatingeList.Contains("1") == true ? "checked" : "")>
+                                            <img src="/images/1star.png" alt="star">
+                                        </label>
+                                        <span>
+                                            @(((List<Service_Based_Marketplace.Models.RatingCount>)ViewBag.AllRatingCount).Where(m => m.Rating == 1).FirstOrDefault() != null ?
+                ((List<Service_Based_Marketplace.Models.RatingCount>)ViewBag.AllRatingCount).Where(m => m.Rating == 1).FirstOrDefault().Count : 0)
+                                        </span>
+                                    </div>
+                                }
+                                else if (item.Rating == 2)
+                                {
+                                    <div class="customCheckbox">
+                                        <label class="css-label1">
+                                            <input type="checkbox" name="Rating" value="2" class="css-checkbox1 lowerSapce chkClassRating" id="chkRatingId" onclick="chkedRating()" @(ViewBag.RatingeList != null && ViewBag.RatingeList.Contains("2") == true ? "checked" : "")>
+                                            <img src="/images/2star.png" alt="star">
+                                        </label>
+                                        <span>
+                                            @(((List<Service_Based_Marketplace.Models.RatingCount>)ViewBag.AllRatingCount).Where(m => m.Rating == 2).FirstOrDefault() != null ?
+                ((List<Service_Based_Marketplace.Models.RatingCount>)ViewBag.AllRatingCount).Where(m => m.Rating == 2).FirstOrDefault().Count : 0)
+                                        </span>
+                                    </div>
+                                }
+                                else if (item.Rating == 3)
+                                {
+                                    <div class="customCheckbox">
+                                        <label class="css-label1">
+                                            <input type="checkbox" name="Rating" value="3" class="css-checkbox1 lowerSapce chkClassRating" id="chkRatingId" onclick="chkedRating()" @(ViewBag.RatingeList != null && ViewBag.RatingeList.Contains("3") == true ? "checked" : "")>
+                                            <img src="/images/3star.png" alt="star">
+                                        </label>
+                                        <span>
+                                            @(((List<Service_Based_Marketplace.Models.RatingCount>)ViewBag.AllRatingCount).Where(m => m.Rating == 3).FirstOrDefault() != null ?
+                ((List<Service_Based_Marketplace.Models.RatingCount>)ViewBag.AllRatingCount).Where(m => m.Rating == 3).FirstOrDefault().Count : 0)
+                                        </span>
+                                    </div>
+                                }
+                                else if (item.Rating == 4)
+                                {
+                                    <div class="customCheckbox">
+                                        <label class="css-label1">
+                                            <input type="checkbox" name="Rating" value="4" class="css-checkbox1 lowerSapce chkClassRating" id="chkRatingId" onclick="chkedRating()" @(ViewBag.RatingeList != null && ViewBag.RatingeList.Contains("4") == true ? "checked" : "")>
+                                            <img src="/images/4star.png" alt="star">
+                                        </label>
+                                        <span>
+                                            @(((List<Service_Based_Marketplace.Models.RatingCount>)ViewBag.AllRatingCount).Where(m => m.Rating == 4).FirstOrDefault() != null ?
+                ((List<Service_Based_Marketplace.Models.RatingCount>)ViewBag.AllRatingCount).Where(m => m.Rating == 4).FirstOrDefault().Count : 0)
+                                        </span>
+                                    </div>
+                                }
+                                else if (item.Rating == 5)
+                                {
+                                    <div class="customCheckbox">
+                                        <label class="css-label1">
+                                            <input type="checkbox" name="Rating" value="5" class="css-checkbox1 lowerSapce chkClassRating" id="chkRatingId" onclick="chkedRating()" @(ViewBag.RatingeList != null && ViewBag.RatingeList.Contains("5") == true ? "checked" : "")>
+                                            <img src="/images/5star.png" alt="star">
+                                        </label>
+                                        <span>
+                                            @(((List<Service_Based_Marketplace.Models.RatingCount>)ViewBag.AllRatingCount).Where(m => m.Rating == 5).FirstOrDefault() != null ?
+                ((List<Service_Based_Marketplace.Models.RatingCount>)ViewBag.AllRatingCount).Where(m => m.Rating == 5).FirstOrDefault().Count : 0)
+                                        </span>
+                                    </div>
+                                }
+
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="leftBox upperSapce">
+                <div class="leftHead">
+                    <h1>Review</h1>
+                    <div class="innerBox">
+                        <div class="rangeSlider">
+                            <div id="slider-range_1"></div>
+                            <input type="text" id="ReviewCount" name="ReviewCount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="leftBox upperSapce">
+                <div class="leftHead">
+                    <h1>Hourly Rate</h1>
+                    <div class="innerBox">
+                        <div class="rangeSlider">
+                            <div id="slider-range_2"></div>
+                            <input type="text" id="HourlyRate" readonly style="border:0; color:#f6931f; font-weight:bold;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Start servicesRight-->
+        <div class="servicesRight fr">
+            @if (Model != null && Model.Count() > 0)
+            {
+                <!--Start pricelowHigh-->
+                <div class="pricelowHigh clearfix">
+                    <div class="priceLeft fl">
+                        <div class="sortby">
+                            <span class="sort">Sort by:</span>
+                            <select class="drop" name="Sortby" id="ddlSortByPrice" onchange="SortRecordbyPrice()">
+                                <option @(ViewBag.ShortByRate == "Low-To-Heigh" ? "selected" : "") value="Low-To-Heigh">Price-Low to High</option>
+                                <option @(ViewBag.ShortByRate == "Heigh-To-Low" ? "selected" : "") value="Heigh-To-Low">Price-High to Low</option>
+                            </select>
+                        </div>
+                        @*<div class="sortby">
+                                <span class="sort">Sort by:</span>
+                                <select class="drop" name="Sortby" id="ddlSortByResponseRate" onchange="SortRecordbyPrice()">
+                                    <option @(ViewBag.ShortByRate == "Low-To-Heigh" ? "selected" : "") value="Low-To-Heigh">Response Rate-Low to High</option>
+                                    <option @(ViewBag.ShortByRate == "Heigh-To-Low" ? "selected" : "") value="Heigh-To-Low">Response Rate-High to Low</option>
+                                </select>
+                            </div>*@
+                        <div class="availableby">
+                            <span class="availsort">Availability:</span>
+                            @*<input type="text" class="availdate FilterCalendarDatePicker" value="@(AvailableDate!=DateTime.MinValue? AvailableDate.ToString("MMM d, yyyy") :"")" placeholder="-Select Date-">
+                                <input type="hidden" class="availdate" id="datepicker" name="AvailableDate" value="@(AvailableDate!=DateTime.MinValue? AvailableDate.ToString("MM/dd/yyyy"):"")" />*@
+                            <input type="text" class="availdate" id="datepicker" value="@(AvailableDate!=DateTime.MinValue? AvailableDate.ToString("MMM d, yyyy") :"")" placeholder="-Select Date-">
+                            <input type="hidden" class="availdate" name="AvailableDate" value="@(AvailableDate!=DateTime.MinValue? AvailableDate.ToString("MM/dd/yyyy"):"")" />
+                        </div>
+                    </div>
+                    <div class="priceRight fr">
+                        <div class="tabs">
+                            <ul>
+                                <li>
+                                    <a title="Grid View" href="#tab1" class="active" onclick="$('#ViewType').val('GridView');">
+                                        <img class="img" src="/images/gridIconclr.png" alt=""><img class="over" src="/images/gridIcon.png" alt="">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a title="List View" href="#tab2" onclick="$('#ViewType').val('ListView');">
+                                        <img class="img" src="/images/listIcon.png" alt=""><img class="over" src="/images/listIconclr.png" alt="">
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <input type="hidden" name="ViewType" id="ViewType" value="@ViewBag.ViewType" />
+                    <!--End pricelowHigh-->
+                    <!--Start Services Man-->
+                    <div class="tabContent" id="tab1">
+                        <div class="servicesPerson clearfix">
+                            <ul class="prsonList clearfix">
+                                @foreach (var item in Model)
+                                {
+                                    <li>
+                                        <!--Start ServicesBox-->
+                                        <div class="servicesBox">
+                                            <div class="servicesImg">
+                                                @if (File.Exists(Server.MapPath(System.Configuration.ConfigurationManager.AppSettings["ProviderServiceBannerImages"] + "/Medium/" + item.ProviderId + "_" + item.ServiceId + "_" + item.BannerImage)))
+                                                {
+                                                    <img title="@Resource.ClickToBookService" style="cursor:pointer;" onclick="window.location.href ='/search/servicedetail?sId=@item.ServiceId&pId=@item.ProviderId'" src="@(System.Configuration.ConfigurationManager.AppSettings["ProviderServiceBannerImages"] + "/Medium/" + item.ProviderId + "_" + item.ServiceId + "_" + item.BannerImage)" alt="img">
+                                                }
+                                                else
+                                                {
+                                                    <img title="@Resource.ClickToBookService" style="cursor:pointer;" onclick="window.location.href ='/search/servicedetail?sId=@item.ServiceId&pId=@item.ProviderId'" src="@(System.Configuration.ConfigurationManager.AppSettings["MemberProfilePic_Default"])" alt="img">
+                                                }
+                                            </div>
+                                            <div class="nameLink">
+                                                <a title="@Resource.ClickToBookService" href="/search/servicedetail?sId=@item.ServiceId&pId=@item.ProviderId">@item.ServiceName</a><span style="float:right" class="OnlineProvider"><img class="@item.ProviderId" src="/images/OfflineProvider.png" title="Offline" /></span>
+                                                <div class="byperson clearfix">
+                                                    <div class="prsonLeft fl"><h3>by <a style="cursor: pointer; color: #005faa" title="@(Resource.ClickToSeeProviderProfile.Replace("knowble", item.ExposureName))" href="/search/knowbleprofile?pId=@item.ProviderId">@((item.ExposureName != null && item.ExposureName.Length > 12) ? (item.ExposureName.Substring(0, 12) + "...") : item.ExposureName)</a></h3></div>
+                                                    @*<div class="prsonRight fr" style="visibility: @((item.Rating==null || item.Rating==0)?"hidden":"visible")">
+                                                            <img title="Rating" src="/Images/@((item.Rating != null ? item.Rating : 0)+"star").png" />
+                                                        </div>*@
+                                                    <div class="prsonRight fr">
+                                                        <img title="Rating" src="/Images/@((item.Rating != null ? item.Rating : 0)+"star").png" />
+                                                    </div>
+                                                </div>
+                                                @*<div class="detailsmsg clearfix">
+                                                        <span class="msg fl" title="Reviews" style="visibility: @((item.Reviews == null || item.Reviews == 0) ? "hidden" : "visible")">@item.Reviews</span>
+                                                        <span class="city1 fl" title="Country"><img src="/images/location1.png" />@((item.CountryName != null && item.CountryName.Length > 10) ? (item.CountryName.Substring(0, 10) + "...") : item.CountryName)</span>
+                                                        <span class="booking fr" title="Bookings" style="visibility: @((item.Bookings == null || item.Bookings == 0) ? "hidden" : "visible")">@((item.Bookings > 1) ? (item.Bookings + " " + Resource.Bookings) : (item.Bookings + " " + Resource.Booking)) </span>
+                                                    </div>*@
+                                                <div class="detailsmsg clearfix">
+                                                    <span class="msg fl" title="Reviews">@item.Reviews</span>
+                                                    <span class="city fl" title="Country">@((item.CountryName != null && item.CountryName.Length > 10) ? (item.CountryName.Substring(0, 10) + "...") : item.CountryName)</span>
+                                                    <span class="booking fr" title="Bookings">@((item.Bookings > 1) ? (item.Bookings + " " + Resource.Bookings) : (item.Bookings + " " + Resource.Booking)) </span>
+                                                </div>
+                                            </div>
+                                            <div class="rate clearfix">
+                                                <span class="fl">@Resource.Rateper15min</span>
+                                                <span class="blueClr fr">
+                                                    @{
+                                                decimal amount1;
+                                                if (Decimal.TryParse(((item.HourlyRate / 4).Value).ToString().Replace(",", "."), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out amount1))
+                                                {
+                                                    @(Service_Based_Marketplace.Utility.CommonController.FormatCurrency(amount1))
+                                                }
+                                                    }
+
+                                                </span>
+                                            </div>
+                                            @*<div class="thumb"><img src="/images/thumb.png" alt="img"></div>*@
+                                        </div>
+                                        <!--End ServicesBox-->
+                                    </li>
+                                    @*if (((Model.ToList().IndexOf(item) + 1) % 3) == 0)
+                                        {
+                                            <div class="clearfix"></div>
+                                        }*@
+                                }
+                            </ul>
+                            <!--End ServicesBox-->
+                        </div>
+                        <!--End Services Man-->
+                    </div>
+
+                    <!---*********************Second Tab***********************-->
+                    <div class="tabContent" id="tab2" style="display:none;">
+                        <!--Start Services Man-->
+                        <div class="servicesPerson clearfix">
+                            @foreach (var item in Model)
+                            {
+                        <!--Start detailServicesBox-->
+                                <div class="detailservicesBox clearfix">
+                                    <div class="detailLeft fl">
+                                        <div class="DservicesImg">
+                                            @if (File.Exists(Server.MapPath(System.Configuration.ConfigurationManager.AppSettings["ProviderServiceBannerImages"] + "/Medium/" + item.ProviderId + "_" + item.ServiceId + "_" + item.BannerImage)))
+                                            {
+                                                <img title="@Resource.ClickToBookService" style="cursor:pointer;" onclick="window.location.href ='/search/servicedetail?sId=@item.ServiceId&pId=@item.ProviderId'" src="@(System.Configuration.ConfigurationManager.AppSettings["ProviderServiceBannerImages"] + "/Medium/" + item.ProviderId + "_" + item.ServiceId + "_" + item.BannerImage)" alt="img" />
+                                            }
+                                            else
+                                            {
+                                                <img title="@Resource.ClickToBookService" style="cursor:pointer;" onclick="window.location.href ='/search/servicedetail?sId=@item.ServiceId&pId=@item.ProviderId'" src="@(System.Configuration.ConfigurationManager.AppSettings["MemberProfilePic_Default"])" alt="img" />
+                                            }
+                                        </div>
+                                        @*<div class="thumb"><img src="/images/thumb.png" alt="img"></div>*@
+                                    </div>
+                                    <div class="detailRight fr">
+                                        <div class="innerDetails">
+                                            <h1><a title="@Resource.ClickToBookService" href="/search/servicedetail?sId=@item.ServiceId&pId=@item.ProviderId">@item.ServiceName</a></h1>
+                                            <h3 style="margin-bottom:0;height:25px;">by <a style="cursor: pointer; color: #005faa; font-size: 13px; " title="@Resource.ClickToSeeProviderProfile" href="/search/knowbleprofile?pId=@item.ProviderId">@(item.ExposureName)</a> I <span title="@item.MemberLanguages" style="color: #848484"> @(item.MemberLanguages.Length > 35 ? item.MemberLanguages.Substring(0, 35) + "..." : item.MemberLanguages)</span> </h3>
+                                            <p>@(item.ShortDescription.Length > 200 ? item.ShortDescription.Substring(0, 200) + "..." : item.ShortDescription)</p>
+                                        </div>
+                                        <div class="rating">
+                                            <span class="fl Dimage"><img title="Rating" src="/Images/@((item.Rating != null ? item.Rating : 0)+"star").png" />  </span>
+                                            <span class="Dmsg blk" title="Reviews">@item.Reviews</span>
+                                            <span class="Dcity blk" title="Country">@((item.CountryName != null && item.CountryName.Length > 6) ? (item.CountryName.Substring(0, 6) + "...") : item.CountryName)</span>
+                                            <span class="Dbooking blk" title="Bookings">@((item.Bookings > 1) ? (item.Bookings + " " + Resource.Bookings) : (item.Bookings + " " + Resource.Booking))</span>
+                                            <span class="ratePer">@Resource.Rateper15min</span>
+                                            <span class="blueClr money fr">
+                                                @*@(Service_Based_Marketplace.Utility.CommonController.FormatCurrency(Convert.ToDecimal((item.HourlyRate / 4).Value.ToString("#.##"))))*@
+
+                                                @{
+                                            decimal amount1;
+                                            if (Decimal.TryParse(((item.HourlyRate / 4).Value).ToString().Replace(",", "."), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out amount1))
+                                            {
+                                                @(Service_Based_Marketplace.Utility.CommonController.FormatCurrency(amount1))
+                                            }
+                                                }
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                        <!--End detailServicesBox-->
+                            }
+                        </div>
+                        <!--End Services Man-->
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="tabContent" id="tab3">
+                    <!--Start Services Man-->
+                    <div class="clearfix">
+                        <!--Start detailServicesBox-->
+                        <div class="detailservicesBox clearfix">
+                            <div style="background-color: #fff; text-align: center; padding: 40% 0; ">
+                                <h2>No Record Found</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            <!--End servicesRight-->
+        </div>
+        <input type="hidden" name="hdnBookingCount" id="hdnBookingCount" value="@TempData["MinBookingCount"]" />
+        <input type="hidden" name="hdnReviewCount" id="hdnReviewCount" value="@TempData["MinReviewCount"]" />
+        <input type="hidden" name="hdnHourlyRate" id="hdnHourlyRate" value="@TempData["MinStartHourlyRate"]" />
+        <input type="hidden" name="hdFilterFlag" id="hdFilterFlag" />
+    </div>
+</div>
+<script type="text/javascript">
+    function paging(pageno) {
+        show_progress();
+        $('#hdn_pageno').val(pageno);
+        $('#dvFilterSearch').parent().submit();
+    }
+
+    function SortRecordbyPrice() {
+        $('#dvFilterSearch').parent().submit();
+    }
+
+    function checkall(chkall, classname) {
+        if (chkall.checked) {
+            $('.' + classname + '').prop('checked', true);
+        }
+        else {
+            $('.' + classname + '').prop('checked', false);
+        }
+        $('#dvFilterSearch').parent().submit();
+    }
+
+    function chkedVarefied() {
+
+        var chkverified = document.getElementsByClassName('verified');
+        var check = true;
+        for (var i = 0; i < chkverified.length; i++) {
+            if (!chkverified[i].checked) {
+                check = false;
+                break;
+            }
+        }
+        $('#hdFilterFlag').val('filterByVerifed');
+        $('#dvFilterSearch').parent().submit();
+    }
+
+    function chkedCountry() {
+        var chkCountryClass = document.getElementsByClassName('chkCountry');
+        var check = true;
+        for (var i = 0; i < chkCountryClass.length; i++) {
+            if (!chkCountryClass[i].checked) {
+                check = false;
+                break;
+            }
+        }
+        $('#hdFilterFlag').val('filterByLocation');
+        $('#dvFilterSearch').parent().submit();
+    }
+
+    function chkedLangauge() {
+        var chkLagaugeClass = document.getElementsByClassName('chkclassLagauge');
+        var check = true;
+        for (var i = 0; i < chkLagaugeClass.length; i++) {
+            if (!chkLagaugeClass[i].checked) {
+                check = false;
+                break;
+            }
+        }
+        $('#hdFilterFlag').val('filterByLanguage');
+        $('#dvFilterSearch').parent().submit();
+    }
+
+    function chkedRating() {
+        var chkRatingClass = document.getElementsByClassName('chkClassRating');
+        var check = true;
+        for (var i = 0; i < chkRatingClass.length; i++) {
+            if (!chkRatingClass[i].checked) {
+                check = false;
+                break;
+            }
+        }
+        $('#hdFilterFlag').val('filterByRating');
+        $('#dvFilterSearch').parent().submit();
+    }
+
+    function OnSuccessJobList() {
+    }
+
+    function OnErrorJobList() {
+    }
+
+</script>
+
+
