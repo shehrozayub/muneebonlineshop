@@ -1,0 +1,487 @@
+﻿.field-validation-error {
+    color: red;
+    float: right;
+    font-size: 13px;
+}
+
+.servicesPerson .prsonRight img {
+    width: auto !important;
+    display: inline-block !important;
+}
+
+.innerDetails {
+    height: 128px;
+}
+
+span.Dmsg, span.Dcity, span.Dbooking, span.ratePer {
+    margin: 0 19px !important;
+}
+
+.personalRight ul li h3 {
+    text-align: center;
+}
+
+.loginBtn_Submit {
+    background-color: #005faa;
+    border: 0 none !important;
+    color: white !important;
+    cursor: pointer;
+    font-family: 'oswald' !important;
+    font-size: 20px !important;
+    height: 43px !important;
+    margin: auto !important;
+    padding: 5px 0 !important;
+    width: 100% !important;
+    font-style: normal !important;
+}
+/*.profilepicImg img {height:68px;width:68px;
+}*/
+
+.pageing {
+    display: block;
+    padding: 0 0px 10px 10px;
+    text-align: right;
+}
+
+.pageing-list {
+    display: inline-block;
+    background: #fff;
+    border: #e7e7e7 solid 1px;
+    border-right: 0;
+}
+
+    .pageing-list ul li {
+        display: block;
+        float: left;
+    }
+
+        .pageing-list ul li a {
+            display: block;
+            padding: 7px 13px;
+            border-right: #e7e7e7 solid 1px;
+            font-size: 13px;
+            color: #303c42;
+            font-family: 'Roboto', sans-serif;
+            transition: all 0.4s ease;
+        }
+
+            .pageing-list ul li a:hover {
+                background: #efefef;
+            }
+
+            .pageing-list ul li a.active {
+                background: #efefef;
+            }
+
+table.dashboardtable th {
+    text-align: center !important;
+}
+
+table.dashboardtable td {
+    text-align: center !important;
+    word-break: break-all;
+}
+
+/*.seekerOverview strong {
+    font-size: 40px !important;
+}*/
+
+footer.dashboradfooter {
+    z-index: 40;
+}
+
+.DOB {
+    padding: 0.5rem;
+}
+
+::-webkit-calendar-picker-indicator {
+    color: rgba(0, 0, 0, 0);
+    /*background:url(http://knowbles.flexsin.in/images/cal-icon-img.png) no-repeat;*/
+    /*background:url(/images/dashboardimages/calnIcon.png) no-repeat;*/
+    opacity: 1;
+}
+
+
+.wrapper {
+    position: relative;
+    /*width: 146px;
+    height: 24px;
+    margin: 20px;*/
+    height: 40px;
+    overflow: hidden;
+}
+
+.Html5DatePicker {
+    border: 0;
+    /*width: 146px;*/
+    height: 24px;
+    line-height: 24px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #fff;
+    border: 1px solid #999;
+    box-sizing: border-box;
+    border: none;
+    cursor: pointer;
+}
+
+.picker {
+    width: 100%;
+    height: 40px;
+    font-size: 999px;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    z-index: 99;
+    cursor: pointer;
+}
+
+.ws-popover-opener {
+    position: relative;
+    zoom: 1;
+    overflow: visible;
+    margin: 0 0 0 2px;
+    width: 19px;
+    cursor: pointer;
+    background: #ccc;
+    font-size: 13px;
+    text-align: center;
+    outline-offset: -2px;
+    padding: 0px 100%;
+    margin-top: -19px !important;
+    height: 40px;
+    opacity: 0;
+}
+
+.ws-popover {
+    left: 0 !important;
+}
+
+.readonly {
+    cursor: default;
+    background: rgba(212, 213, 214, 0.4);
+}
+
+    .readonly:hover {
+        border: 1px solid #999 !important;
+    }
+
+.calndr {
+    background: url(../images/calander-icon.png) no-repeat 98% center;
+}
+
+/*-------------calander---------------------*/
+.ui-datepicker {
+    background: #f4f4f4;
+    /*border: #e4e3e3 solid 1px;*/
+    width: 260px;
+    border-radius: 3px;
+    /*box-shadow: #eee 0 0 3px 2px;*/
+    border: solid 1px #696666;
+}
+
+.ui-datepicker-week-end td {
+    width: 20px;
+}
+
+.ui-datepicker-week-end a {
+    padding: 3px 0;
+    width: 20px;
+    text-align: center;
+}
+
+.ui-datepicker-header {
+    color: #333;
+    padding: 10px;
+    border-bottom: #e4e3e3 solid 1px;
+    background: darkgray;
+}
+
+.ui-icon-circle-triangle-w {
+    display: inline-block;
+    float: left;
+    background: url(../images/calleft.png) center center no-repeat;
+    border: #ccc solid 1px;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    text-indent: -99999px;
+}
+
+.ui-icon-circle-triangle-e {
+    display: inline-block;
+    float: right;
+    background: url(../images/calright.png) center center no-repeat;
+    border: #ccc solid 1px;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    text-indent: -99999px;
+}
+
+.ui-datepicker-title {
+    display: block;
+    /*font-size: 13px;*/
+    color: #666;
+    text-align: center;
+    font-family: "open_sanssemibold";
+    line-height: 25px;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.ui-datepicker-calendar {
+    width: 100%;
+    padding: 5px 0;
+    text-align: center;
+}
+
+.ui-datepicker-today {
+    background: #4a83d4;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    margin: 5px;
+}
+
+-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
+    border: 1px solid #aaaaaa;
+    background: darkgray;   
+    color: #666;
+}
+    .ui-datepicker-today a {
+        width: 25px;
+        height: 25px;
+        color: #fff;
+    }
+
+.ui-state-default2 {
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    display: inline-block;
+    margin: 2px;
+    border-radius: 50%;
+    border: rgba(0, 0, 0, 0) solid 1px;
+    color: #696666;
+    font-weight: bold;
+}
+
+    .ui-state-default2:hover {
+        border: #4a83d4 solid 1px;
+        /*color: black;
+        font-weight: bold;*/
+    }
+
+.ui-datepicker-week-end a {
+    padding: 0;
+    width: 25px;
+}
+
+.RequiredMsg {
+    font-size: 12px;
+    color: red;
+}
+
+.dashboardtable td a {
+    color: #4e4e4e;
+}
+
+.Datepicker {
+    background: url(/images/dashboardimages/calnIcon.png) no-repeat 98% center;
+    background-color: white;
+    cursor: pointer;
+}
+
+.DatepickerDisplayOnly {
+    background: url(/images/dashboardimages/calnIcon.png) no-repeat 98% center;
+    background-color: white;
+    cursor: pointer;
+}
+
+.ProfileCompleteMsg {
+    padding: 10px 0 10px 10px;
+    margin-bottom: 10px;
+    background-color: white;
+}
+
+.ValidationStar {
+    font-size: 12px;
+    font-style: normal;
+}
+
+.CalendarIcon {
+    position: relative;
+}
+
+.profileheading h2 {
+    margin-top: 0;
+}
+
+.profileheading {
+    padding-left: 10px;
+    width: 64%;
+    word-wrap: break-word;
+}
+
+
+/* Profile Strength */
+
+
+.pie_progress {
+    width: 100px;
+    display: block;
+    margin: auto;
+    height: 100px;
+}
+
+/*.profcontLeft {
+    width: 27% !important;
+}
+
+.profcontRight {
+    width: 70% !important; 
+}*/
+
+.MemberProfilePicUpload {
+    height: 165px;
+}
+
+.profilePic {
+    height: 130px !important;
+}
+
+/* Altered CSS  Start */
+/*
+.personalLeft ul li{display:block;font-size:14px;color:#fff; display:block;margin-bottom: 5px; position:relative;}
+    .personalLeft ul li text{position:absolute; left:80px; top: 0;}
+    */
+/* Altered CSS  End */
+
+.ProfessionalDetails li b {
+    width: 20%;
+    display: inline-block;
+    VERTICAL-ALIGN: top;
+}
+
+
+.ProfessionalDetails li text {
+    width: 78%;
+    word-wrap: break-word;
+    display: inline-block;
+}
+
+.rate > span.blueClr {
+    font-size: 15px !important;
+}
+
+.city {
+    margin: 0 25px !important;
+}
+
+.assistanceBox {
+    border: 5px solid white !important;
+}
+
+.assistanceDetails {
+    border-left: 5px solid white !important;
+}
+
+
+#ApplyPromoBox {
+    height: 375px;
+}
+
+#EventSchedularBox {
+    height: 505px;
+}
+
+#EventSchedularBox .createevntBtn{margin:0 !important;}
+
+#EventDetailsPopup {
+    height: 250px;
+    width: 25%;
+}
+
+#BlockCalanderPopUp {
+    height: 370px;
+}
+
+#UnblockCalandarPopUp {
+    height: 300px;
+}
+
+#BookingDetailPopUp {
+    height: 485px;
+}
+
+#ChangeEmailPopUp {
+    height: 420px;
+}
+
+#ReauthenticateUserPopUp{
+    height: 200px;
+}
+
+.updateBtn {
+    border: none;
+}
+.VerifiedImage img{width:20px !important;}
+
+.dashboardtable td a {color: #005faa;}
+
+.disablearrow {
+    cursor: not-allowed;
+}
+.passBtn{border:none;cursor:pointer;}
+        .detailLeft {
+            width: 20% !important;
+            position: relative;
+        }
+
+        .detailRight {
+            width: 80%;
+        }
+
+        .DservicesImg img {
+            width: 140px;
+        }
+
+        .FilterBox {
+            max-height: 200px;
+            overflow: auto;
+        }
+
+        .RemoveCartBtn {
+            background-color: #005faa;
+            color: white;
+            padding: 10px 0;
+            width: 100%;
+            cursor: pointer;
+            max-width: 160px;
+            margin: 22px;
+            display: table;
+            border: 1px solid transparent;
+            text-align: center;
+            text-decoration: none;
+            font-family: 'Open Sans';
+            text-transform: capitalize;
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+
+        .innerDetails {
+            height: auto !important;
+            position: relative;
+        }
+
+        .detailservicesBox {
+            border: none !important;
+        }
